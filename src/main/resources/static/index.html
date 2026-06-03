@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СТО - Учёт автомобилей</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>СТО - Учёт автомобилей</h1>
+
+    <div class="tabs">
+        <button class="active" onclick="showTab('clients')">Клиенты</button>
+        <button onclick="showTab('cars')">Автомобили</button>
+        <button onclick="showTab('mechanics')">Механики</button>
+        <button onclick="showTab('orders')">Заявки</button>
+    </div>
+
+    <div id="clients" class="tab-content active">
+        <div class="form-container">
+            <form onsubmit="addClient(event)">
+                <input type="text" id="clientName" placeholder="ФИО" required>
+                <input type="text" id="clientPhone" placeholder="Телефон" required>
+                <input type="email" id="clientEmail" placeholder="Email" required>
+                <button type="submit">Добавить клиента</button>
+            </form>
+            <button class="refresh-btn" onclick="loadClients()">Обновить</button>
+        </div>
+        <table id="clientsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ФИО</th>
+                    <th>Телефон</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div id="cars" class="tab-content">
+        <div class="form-container">
+            <form onsubmit="addCar(event)">
+                <select id="carClientId" required></select>
+                <input type="text" id="carPlate" placeholder="Госномер" required>
+                <input type="text" id="carBrand" placeholder="Марка" required>
+                <input type="text" id="carModel" placeholder="Модель" required>
+                <input type="number" id="carYear" placeholder="Год выпуска" required>
+                <input type="text" id="carVin" placeholder="VIN" required>
+                <button type="submit">Добавить автомобиль</button>
+            </form>
+            <button class="refresh-btn" onclick="loadCars()">Обновить</button>
+        </div>
+        <table id="carsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Госномер</th>
+                    <th>Марка</th>
+                    <th>Модель</th>
+                    <th>Год</th>
+                    <th>VIN</th>
+                    <th>Клиент ID</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div id="mechanics" class="tab-content">
+        <div class="form-container">
+            <form onsubmit="addMechanic(event)">
+                <input type="text" id="mechanicName" placeholder="ФИО" required>
+                <input type="text" id="mechanicSpec" placeholder="Специализация" required>
+                <input type="text" id="mechanicPhone" placeholder="Телефон" required>
+                <button type="submit">Добавить механика</button>
+            </form>
+            <button class="refresh-btn" onclick="loadMechanics()">Обновить</button>
+        </div>
+        <table id="mechanicsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ФИО</th>
+                    <th>Специализация</th>
+                    <th>Телефон</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div id="orders" class="tab-content">
+        <div class="form-container">
+            <form onsubmit="createOrder(event)">
+                <select id="orderCarId" required></select>
+                <textarea id="orderFault" placeholder="Описание неисправности" required></textarea>
+                <button type="submit">Создать заявку</button>
+            </form>
+            <button class="refresh-btn" onclick="loadOrders()">Обновить</button>
+        </div>
+        <table id="ordersTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Дата</th>
+                    <th>Авто</th>
+                    <th>Клиент</th>
+                    <th>Неисправность</th>
+                    <th>Статус</th>
+                    <th>Механик</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

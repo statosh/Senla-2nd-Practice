@@ -1,7 +1,8 @@
 package com.senprac.sto.mechanic.controller;
 
+import com.senprac.sto.mechanic.dto.MechanicDto;
 import com.senprac.sto.mechanic.service.MechanicService;
-import com.senprac.sto.entity.Mechanic;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,26 +10,23 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/mechanics")
+@RequiredArgsConstructor
 public class MechanicController {
 
     private final MechanicService mechanicService;
 
-    public MechanicController(MechanicService mechanicService) {
-        this.mechanicService = mechanicService;
-    }
-
     @PostMapping
-    public ResponseEntity<Mechanic> addMechanic(@RequestBody Mechanic mechanic) {
-        return ResponseEntity.ok(mechanicService.addMechanic(mechanic));
+    public ResponseEntity<MechanicDto> addMechanic(@RequestBody MechanicDto mechanicDto) {
+        return ResponseEntity.ok(mechanicService.addMechanic(mechanicDto));
     }
 
     @GetMapping
-    public ResponseEntity<List<Mechanic>> getAllMechanics() {
+    public ResponseEntity<List<MechanicDto>> getAllMechanics() {
         return ResponseEntity.ok(mechanicService.getAllMechanics());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Mechanic> getMechanicById(@PathVariable Long id) {
+    public ResponseEntity<MechanicDto> getMechanicById(@PathVariable Long id) {
         return mechanicService.getMechanicById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

@@ -1,7 +1,8 @@
 package com.senprac.sto.car.controller;
 
+import com.senprac.sto.car.dto.CarDto;
 import com.senprac.sto.car.service.CarService;
-import com.senprac.sto.entity.Car;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,26 +10,23 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cars")
+@RequiredArgsConstructor
 public class CarController {
 
     private final CarService carService;
 
-    public CarController(CarService carService) {
-        this.carService = carService;
-    }
-
     @PostMapping("/client/{clientId}")
-    public ResponseEntity<Car> addCar(@RequestBody Car car, @PathVariable Long clientId) {
-        return ResponseEntity.ok(carService.addCar(car, clientId));
+    public ResponseEntity<CarDto> addCar(@RequestBody CarDto carDto, @PathVariable Long clientId) {
+        return ResponseEntity.ok(carService.addCar(carDto, clientId));
     }
 
     @GetMapping
-    public ResponseEntity<List<Car>> getAllCars() {
+    public ResponseEntity<List<CarDto>> getAllCars() {
         return ResponseEntity.ok(carService.getAllCars());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Car> getCarById(@PathVariable Long id) {
+    public ResponseEntity<CarDto> getCarById(@PathVariable Long id) {
         return carService.getCarById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

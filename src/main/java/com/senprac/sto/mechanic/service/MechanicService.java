@@ -1,30 +1,33 @@
 package com.senprac.sto.mechanic.service;
 
+import com.senprac.sto.mechanic.dto.MechanicDto;
+import com.senprac.sto.mechanic.mapper.MechanicMapper;
 import com.senprac.sto.mechanic.repository.MechanicRepository;
-import com.senprac.sto.entity.Mechanic;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class MechanicService {
 
     private final MechanicRepository mechanicRepository;
+    private final MechanicMapper mechanicMapper;
 
-    public MechanicService(MechanicRepository mechanicRepository) {
-        this.mechanicRepository = mechanicRepository;
+    public MechanicDto addMechanic(MechanicDto mechanicDto) {
+        return mechanicMapper.toDto(mechanicRepository.save(mechanicMapper.toEntity(mechanicDto)));
     }
 
-    public Mechanic addMechanic(Mechanic mechanic) {
-        return mechanicRepository.save(mechanic);
+    public List<MechanicDto> getAllMechanics() {
+        return mechanicRepository.findAll().stream()
+                .map(mechanicMapper::toDto)
+                .toList();
     }
 
-    public List<Mechanic> getAllMechanics() {
-        return mechanicRepository.findAll();
-    }
-
-    public Optional<Mechanic> getMechanicById(Long id) {
-        return mechanicRepository.findById(id);
+    public Optional<MechanicDto> getMechanicById(Long id) {
+        return mechanicRepository.findById(id).map(mechanicMapper::toDto);
     }
 
     public void deleteMechanic(Long id) {
